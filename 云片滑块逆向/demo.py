@@ -6,7 +6,6 @@ import sys
 import time
 import uuid
 from typing import List
-from captcha_recognizer.recognizer import Recognizer
 import ddddocr
 import requests
 from Crypto.Cipher import PKCS1_v1_5, AES
@@ -111,11 +110,7 @@ class YunPian:
         distance = ocr.slide_match(frontImage, bgImage)
         logger.info(int(distance['target'][0] / 480 * 304))
         return int(distance['target'][0] / 480 * 304) + random.randint(10,11)
-    def get_distance1(self,bgPath='./bg.jpg'):
-        box, confidence = Recognizer().identify_gap(source=bgPath, verbose=False)
-        logger.info(box)
-        logger.info(confidence)
-        return int(box[0] / 480 * 304) + random.randint(1,2)
+
     def get_points(self,distance: int, trajectory_length: int,
                                start_x: int = random.randint(800,850), start_y: int = random.randint(1960,1971),
                                start_time: int = random.randint(56,60)) -> List[List[int]]:
@@ -302,7 +297,6 @@ class YunPian:
         img_obj = yp.get_images(get_i_k_ojb['i'], get_i_k_ojb['k'])
         yp.save_image(img_obj['data']['bg'], img_obj['data']['front'])
         distance = yp.get_distance()
-        # distance = yp.get_distance1()
         yp.verifyCaptcha(distance,img_obj['data']['token'])
 
 if __name__ == '__main__':
