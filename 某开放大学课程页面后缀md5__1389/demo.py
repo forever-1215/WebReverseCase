@@ -25,6 +25,6 @@ cookies = {
 url = "https://course.ougd.cn/course/view.php?id=254"
 final_url = execjs.compile(open('demo.js', 'r',encoding='utf-8').read()).call('generateSignedURL',url)
 print(final_url)
-response = requests.get(final_url['finalURL'], headers=headers, cookies=cookies)
+response = requests.get(final_url['finalURL'], headers=headers, cookies=cookies, verify=False)
 print(response.text)
 print(response)
